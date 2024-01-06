@@ -12,6 +12,7 @@ call :setIfAbsent DECOMPILER_FILE %~dp0vineflower.jar
 @REM The options passed to the decompiler.
 @REM This options are for VineFlower. (https://github.com/Vineflower/vineflower)
 call :setIfAbsent DECOMPILER_OPTS "-nns=true -tcs=true -vvm=true -iec=true -jrt=current -jvn=false -dcc=true"
+call :setIfAbsent DECOMPILER_INDENT "    "
 
 @REM The directory that has the library jars.
 call :setIfAbsent LIBRARY_DIR %~dp0libs\
@@ -47,7 +48,7 @@ for /R %LIBRARY_DIR% %%i in (*.jar) do (
    set libraries=!libraries! --add-external="!library!"
 )
 
-%JAVA_CMD% -jar %DECOMPILER_FILE% %DECOMPILER_OPTS% %libraries% %JAR% %OUT%
+%JAVA_CMD% -jar %DECOMPILER_FILE% %DECOMPILER_OPTS% -ind="%DECOMPILER_INDENT%" %libraries% %JAR% %OUT%
 
 :setIfAbsent
 if not defined %1 (
