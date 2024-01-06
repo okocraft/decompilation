@@ -48,6 +48,11 @@ for /R %LIBRARY_DIR% %%i in (*.jar) do (
    set libraries=!libraries! --add-external="!library!"
 )
 
+@REM Delete the output directory before decompilation
+if not "%DECOMPILER_DELETE_OUTPUT_DIR%"=="false" (
+    rmdir %OUT% /s /q > nul 2>&1
+)
+
 %JAVA_CMD% -jar %DECOMPILER_FILE% %DECOMPILER_OPTS% -ind="%DECOMPILER_INDENT%" %libraries% %JAR% %OUT%
 
 :setIfAbsent
