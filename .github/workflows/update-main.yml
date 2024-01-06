@@ -1,0 +1,41 @@
+name: Update Main Branch
+on:
+  push:
+    branches:
+      - 'dev'
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout git repository"
+        uses: actions/checkout@v4.1.1
+      - name: "Configure git"
+        run: |
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "Github Actions"
+      - name: "Clone main branch"
+        uses: actions/checkout@v4.1.1
+        with:
+          path: staging
+          ref: refs/heads/main
+      - name: "Update files"
+        run: |
+          for file in *; do
+            if [ -f "$file" ]; then
+                cp -f $file ./staging/$file
+            fi
+          done
+      - name: "Get current commit hash"
+        id: current_commit_hash
+        run: |
+          hash=`git show --format='%H' --no-patch`
+          echo "result=$hash" >> $GITHUB_OUTPUT
+      - name: "Open pull request"
+        uses: peter-evans/create-pull-request@v5.0.2
+        with:
+          title: Update main branch
+          body: ''
+          commit-message: Update decompilation to ${{ steps.current_commit_hash.outputs.result }}
+          branch: staging
+          path: staging
