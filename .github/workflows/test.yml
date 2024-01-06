@@ -1,0 +1,25 @@
+name: Test Scripts
+on: [push, pull_request]
+
+jobs:
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4.0.0
+        with:
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "21"
+      - name: "Test: Decompile"
+        shell: cmd
+        run: |
+          call decompile.bat .\.github\workflows\assets\Hugs-1.2.jar .\test
+      - name: Upload test directory
+        uses: actions/upload-artifact@v4.0.0
+        continue-on-error: true
+        with:
+          name: windows-test-result
+          path: test
