@@ -27,13 +27,13 @@ if "%1"=="" (
     echo Please specify the jar file.
     exit /b 1
 ) else (
-    set JAR=%1
+    set DECOMPILER_TARGET_JAR=%1
 )
 
 if "%2"=="" (
-    set OUT=out
+    set DECOMPILER_OUTPUT_DIR=out
 ) else (
-    set OUT=%2
+    set DECOMPILER_OUTPUT_DIR=%2
 )
 
 @REM Attempt to download the decompiler.
@@ -50,10 +50,10 @@ for /R %LIBRARY_DIR% %%i in (*.jar) do (
 
 @REM Delete the output directory before decompilation
 if not "%DECOMPILER_DELETE_OUTPUT_DIR%"=="false" (
-    rmdir %OUT% /s /q > nul 2>&1
+    rmdir %DECOMPILER_OUTPUT_DIR% /s /q > nul 2>&1
 )
 
-%JAVA_CMD% -jar %DECOMPILER_FILE% %DECOMPILER_OPTS% -ind="%DECOMPILER_INDENT%" %libraries% %JAR% %OUT%
+%JAVA_CMD% -jar %DECOMPILER_FILE% %DECOMPILER_OPTS% -ind="%DECOMPILER_INDENT%" %libraries% %DECOMPILER_TARGET_JAR% %DECOMPILER_OUTPUT_DIR%
 
 :setIfAbsent
 if not defined %1 (
