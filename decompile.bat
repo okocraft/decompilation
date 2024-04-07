@@ -3,7 +3,7 @@
 @REM The decompile type. 
 @REM If setting this value to "local", this script does not attempt to download the decompiler.
 @REM The available types for downloading the decompiler are listed in download.bat
-call :setIfAbsent DECOMPILER_TYPE vf10
+call :setIfAbsent DECOMPILER_TYPE vf
 
 @REM The decompiler filepath.
 @REM If DECOMPILER_TYPE is "local", the decompiler should be present at this filepath.
