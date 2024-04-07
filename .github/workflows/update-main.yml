@@ -32,7 +32,7 @@ jobs:
           hash=`git show --format='%H' --no-patch`
           echo "result=$hash" >> $GITHUB_OUTPUT
       - name: "Open pull request"
-        uses: peter-evans/create-pull-request@v5.0.2
+        uses: peter-evans/create-pull-request@v6.0.2
         with:
           title: Update main branch
           body: ''

@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v4.0.0
+      - uses: actions/setup-java@v4.2.1
         with:
           distribution: "temurin" # See 'Supported distributions' for available options
           java-version: "21"
@@ -18,7 +18,7 @@ jobs:
         run: |
           call decompile.bat .\.github\workflows\assets\Hugs-1.2.jar .\test
       - name: Upload test directory
-        uses: actions/upload-artifact@v4.0.0
+        uses: actions/upload-artifact@v4.3.1
         continue-on-error: true
         with:
           name: windows-test-result
