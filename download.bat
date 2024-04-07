@@ -3,22 +3,34 @@
 
 @REM
 @REM Available decompiler types:
-@REM   vf10: https://github.com/Vineflower/vineflower/tree/develop/1.10.0
+@REM   vf: https://github.com/Vineflower/vineflower/
+@REM   vf10 (Deprecated, use vf instead): https://github.com/Vineflower/vineflower/ 
 @REM
 
-if "%1"=="vf10" (
-    set VF_REPO=https://s01.oss.sonatype.org/content/repositories/snapshots/org/vineflower/vineflower/1.10.0-SNAPSHOT/
-    set URL=!VF_REPO!vineflower-1.10.0-20231209.170602-69.jar
-
-    for /f %%i in ('curl -s !URL!.sha512') do (
-        set EXPECTED_HASH=%%i
-    )
-
-    set FILE=%~dp0vineflower.jar
+if "%1"=="vf" (
+    goto vf
+) else if "%1"=="vf10" (
+    goto vf
 ) else (
     echo Unknown source: %1
     exit /b 1
 )
+
+@REM Define the url of Vineflower
+:vf
+
+set VF_REPO=https://repo.maven.apache.org/maven2/org/vineflower/vineflower/1.10.0/
+set URL=!VF_REPO!vineflower-1.10.0.jar
+
+for /f %%i in ('curl -s !URL!.sha512') do (
+    set EXPECTED_HASH=%%i
+)
+
+set FILE=%~dp0vineflower.jar
+
+goto hash
+
+:hash
 
 @REM Overwrite the filepath if specified.
 if not "%2"=="" (
