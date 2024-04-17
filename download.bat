@@ -19,8 +19,8 @@ if "%1"=="vf" (
 @REM Define the url of Vineflower
 :vf
 
-set VF_REPO=https://repo.maven.apache.org/maven2/org/vineflower/vineflower/1.10.0/
-set URL=!VF_REPO!vineflower-1.10.0.jar
+set VF_REPO=https://repo.maven.apache.org/maven2/org/vineflower/vineflower/1.10.1/
+set URL=!VF_REPO!vineflower-1.10.1.jar
 
 for /f %%i in ('curl -s !URL!.sha512') do (
     set EXPECTED_HASH=%%i
